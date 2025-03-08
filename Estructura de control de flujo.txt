@@ -1,0 +1,110 @@
+MENÚ DE OPCIONES: SE LE SOLICITA HACER UN PROGRAMA MULTIFUCIÓN PARA UTILIZARLO EN LA
+SUCURSAL DEL SUR DE LA EMPRESA "TUTTO" QUE SE ENCARGA DE LA VENTA DE CHOCOLATES DE
+DIFERENTES SABORES. SE DEBERÁN INCLUIR LAS SIGUIENTES OPCIONES.
+
++ REGISTRO DE VENTAS: ESCRIBE UN PROGRAMA QUE PERMITA AL USUARIO INGRESAR EL PRECIO Y LA
+CANTIDAD DE CADA PRODUCTO VENDIDO Y LUEGO CALCULE EL TOTAL DE VENTAS.
+
++ CONVERSIÓN DE DIVISAS: AL INICIAR EL PROGRAMA, SE DEBE ESTABLECER EL TIPO DE CAMBIO PARA
+CONVERTIR DE DÓLARES A QUETZALES Y DE EUROS A QUETZALES. LUEGO AL SELECCIONAR LA OPCION,
+SE DEBE SOLICITAR LA MONEDA INICIAL Y EL MONTO QUE SE DESEA CONVERTIR, DEVOLVIENDO EL
+RESULTADO EN QUETZALES.
+
++ CÁLCULO DE INTERÉSES: LA EMPRESA OFRECE EL SERVICIO DE RENTA DE STANDS, CADA UNO CUESTA
+Q.300.00. COBRA UN 2% DE MORA CAPITALIZABLE DIARÍAMENTE, LUEGO DEL 2 DÍA DE RETRASO EN LA
+DEVOLUCIÓN. CÁLCULE EL MONTO A PAGAR SEGÚN LOS DÍAS DE RETRASO DEL CLIENTE Y LA CANTIDAD
+DE STANDS QUE SOLICITÓ.
+
+¡MUCHA SUERTE! RECUERDEN "DIVIDE Y VENCERÁS"
+
+WHILE 8 DO WHILE
+
+let tipoCambioDolar = 7.80;
+let tipoCambioEuro = 8.50;
+let opcion;
+
+do {
+  opcion = parseInt(
+    prompt(`
+      Menú de Opciones:
+      1. Registro de Ventas
+      2. Conversión de Divisas
+      3. Cálculo de Intereses
+      4. Salir
+      Ingrese el número de la opción deseada:
+    `)
+  );
+
+  switch (opcion) {
+    case 1:
+      let totalVentas = 0;
+      let continuarVentas = true;
+
+      while (continuarVentas) {
+        let precio = parseFloat(prompt("Ingrese el precio del producto:"));
+        let cantidad = parseInt(prompt("Ingrese la cantidad vendida:"));
+
+        if (isNaN(precio) || isNaN(cantidad)) {
+          alert("Por favor, ingrese valores numéricos válidos.");
+          continue;
+        }
+
+        totalVentas += precio * cantidad;
+        continuarVentas = confirm("¿Desea ingresar otro producto?");
+      }
+
+      alert("El total de ventas es: Q" + totalVentas);
+      break;
+
+    case 2:
+      let moneda = prompt("Ingrese la moneda a convertir (USD o EUR):").toUpperCase();
+      let monto = parseFloat(prompt("Ingrese el monto a convertir:"));
+
+      if (isNaN(monto)) {
+        alert("Por favor, ingrese un monto numérico válido.");
+        break;
+      }
+
+      let resultado;
+      if (moneda === "USD") {
+        resultado = monto * tipoCambioDolar;
+        alert(monto + " dólares equivalen a Q" + resultado);
+      } else if (moneda === "EUR") {
+        resultado = monto * tipoCambioEuro;
+        alert(monto + " euros equivalen a Q" + resultado);
+      } else {
+        alert("Moneda no válida. Por favor, ingrese USD o EUR.");
+      }
+      break;
+
+    case 3:
+      let cantidadStands = parseInt(prompt("Ingrese la cantidad de stands rentados:"));
+      let diasRetraso = parseInt(prompt("Ingrese los días de retraso:"));
+
+      if (isNaN(cantidadStands) || isNaN(diasRetraso)) {
+        alert("Por favor, ingrese valores numéricos válidos.");
+        break;
+      }
+
+      let costoTotal = cantidadStands * 300;
+      let intereses = 0;
+
+      if (diasRetraso > 2) {
+        for (let i = 3; i <= diasRetraso; i++) {
+          intereses += costoTotal * 0.02;
+          costoTotal += intereses;
+        }
+      }
+
+      alert("El monto total a pagar es: Q" + costoTotal);
+      break;
+
+    case 4:
+      alert("¡Hasta luego!");
+      break;
+
+    default:
+      alert("Opción no válida. Por favor, ingrese una opción del 1 al 4.");
+  }
+} while (opcion !== 4);
+
